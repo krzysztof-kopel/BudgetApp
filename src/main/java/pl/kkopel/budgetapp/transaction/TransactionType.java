@@ -9,16 +9,13 @@ import jakarta.persistence.Table;
 @Table(name="\"TransactionTypes\"")
 public class TransactionType {
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private String id;
 
-    public TransactionType() {}
+    public TransactionType() {
+    }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }
