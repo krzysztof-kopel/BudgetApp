@@ -23,14 +23,14 @@ public class AccountController {
     @Operation(summary = "Get all accounts", description = "Provides the list of all accounts.")
     public ResponseEntity<List<Account>> getAllAccounts() {
         List<Account> accountList = this.accountService.getAllAccounts();
-        return ResponseEntity.status(HttpStatus.OK).body(accountList);
+        return ResponseEntity.ok(accountList);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get account with specified id", description = "Provides the account with id passed in the URL")
     public ResponseEntity<Account> getAccountById(@PathVariable UUID id) {
         Account account = this.accountService.getAccountById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(account);
+        return ResponseEntity.ok(account);
     }
 
     @PostMapping
