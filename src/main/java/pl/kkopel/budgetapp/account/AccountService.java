@@ -29,6 +29,7 @@ public class AccountService {
 
     Account createAccount(Account account) {
         account.setBalance(BigDecimal.ZERO);
+        account.setId(null);
         return this.accountRepository.save(account);
     }
 

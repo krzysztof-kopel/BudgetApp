@@ -55,4 +55,8 @@ public class Account {
                 ", balance=" + balance +
                 '}';
     }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 }
