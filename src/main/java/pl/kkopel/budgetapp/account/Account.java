@@ -27,10 +27,6 @@ public class Account {
         this.balance = BigDecimal.ZERO;
     }
 
-    public Account(AccountCreationDTO dto) {
-        this.name = dto.name();
-    }
-
     public UUID getId() {
         return id;
     }
