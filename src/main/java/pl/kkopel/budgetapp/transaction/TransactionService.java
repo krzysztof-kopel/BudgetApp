@@ -69,7 +69,6 @@ public class TransactionService {
             changeAccountBalance(account, transaction.getAmount(), AccountOperation.ADD);
         }
 
-        transaction.setId(null);
         transaction.setAccount(account);
         transaction.setCategory(category);
 

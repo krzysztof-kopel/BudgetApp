@@ -29,12 +29,10 @@ public class AccountService {
 
     Account createAccount(Account account) {
         account.setBalance(BigDecimal.ZERO);
-        account.setId(null);
         return this.accountRepository.save(account);
     }
 
     void deleteAccount(UUID id) {
-        Account account = this.accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + id));
         if (this.transactionRepository.existsByAccountId(id)) {
             throw new AccountHasTransactionsException("Transactions exist for account with id: " + id);
         }
