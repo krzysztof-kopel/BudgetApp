@@ -8,9 +8,9 @@ A Spring Boot-based RESTful API designed for tracking personal finances, account
 - Build tool: **Gradle**
 ## Quick start
 1. Download the repository: `git clone https://github.com/krzysztof-kopel/BudgetApp`
-2. Run the database `docker-compose up -d`.
+2. Run the database `docker-compose up -d`
 3. Run the application `./gradlew bootRun`
-4. See the SwaggerUI documentation at [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
+4. See the SwaggerUI documentation at [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 ![img.png](screenshots/swagger_ui.png)
 
 ## Features
