@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.kkopel.budgetapp.category.Category;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -59,5 +60,38 @@ public class TransactionController {
     public ResponseEntity<Void> deleteTransaction(@PathVariable UUID id) {
         this.transactionService.deleteTransaction(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/summary/total-income")
+    @Operation(summary = "Get total income", description = "Provides total income from all accounts")
+    public ResponseEntity<BigDecimal> getTotalIncome() {
+        TransactionType transactionType = new TransactionType();
+        transactionType.setId("INCOME");
+
+        BigDecimal results = this.transactionService.getTotalIncomeExpense(transactionType, null);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/summary/total-expense")
+    @Operation(summary = "Get total expense", description = "Provides total expense from all accounts")
+    public ResponseEntity<BigDecimal> getTotalExpense() {
+        TransactionType transactionType = new TransactionType();
+        transactionType.setId("EXPENSE");
+
+        BigDecimal results = this.transactionService.getTotalIncomeExpense(transactionType, null);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/summary/category/{categoryId}")
+    @Operation(summary = "Get total expense for category", description = "Provides total expense from all acounts for the given category")
+    public ResponseEntity<BigDecimal> getCategoryExpense(@PathVariable UUID categoryId) {
+        Category category = new Category();
+        category.setId(categoryId);
+        TransactionType transactionType = new TransactionType();
+        transactionType.setId("EXPENSE");
+
+
+        BigDecimal results = this.transactionService.getTotalIncomeExpense(transactionType, category);
+        return ResponseEntity.ok(results);
     }
 }
