@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.kkopel.budgetapp.category.Category;
+import pl.kkopel.budgetapp.account.Account;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -50,7 +51,25 @@ public class TransactionController {
 
     @PostMapping
     @Operation(summary = "Create transaction", description = "Creates transaction with given parameters.")
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDTO dto) {
+        Transaction transaction = new Transaction();
+
+        Account account = new Account();
+        account.setId(dto.accountId());
+        transaction.setAccount(account);
+
+        transaction.setAmount(dto.amount());
+
+        TransactionType type = new TransactionType();
+        type.setId(dto.type());
+        transaction.setType(type);
+
+        Category category = new Category();
+        category.setId(dto.categoryId());
+        transaction.setCategory(category);
+
+        transaction.setDescription(dto.description());
+
         Transaction newTransaction = this.transactionService.createTransaction(transaction);
         return ResponseEntity.status(HttpStatus.CREATED).body(newTransaction);
     }
