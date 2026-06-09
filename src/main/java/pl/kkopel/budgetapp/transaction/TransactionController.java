@@ -31,7 +31,7 @@ public class TransactionController {
     }
 
     @GetMapping
-    @Operation(summary = "Get list of transacation", description = "Provides list of transactions, with optional filtering by completion date and category")
+    @Operation(summary = "Get list of transactions", description = "Provides list of transactions, with optional filtering by completion date and category")
     public ResponseEntity<List<Transaction>> getAllTransactions(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
@@ -83,7 +83,7 @@ public class TransactionController {
     }
 
     @GetMapping("/summary/category/{categoryId}")
-    @Operation(summary = "Get total expense for category", description = "Provides total expense from all acounts for the given category")
+    @Operation(summary = "Get total expense for category", description = "Provides total expense from all accounts for the given category")
     public ResponseEntity<BigDecimal> getCategoryExpense(@PathVariable UUID categoryId) {
         Category category = new Category();
         category.setId(categoryId);
