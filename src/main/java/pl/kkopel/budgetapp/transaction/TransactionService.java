@@ -44,7 +44,7 @@ public class TransactionService {
 
         if (category != null) {
             transactions = transactions.stream()
-                    .filter(x -> x.getCategory().equals(category))
+                    .filter(x -> x.getCategory().getId().equals(category.getId()))
                     .toList();
         }
 

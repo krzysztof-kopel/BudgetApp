@@ -26,14 +26,14 @@ public class TransactionController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get transaction by ID", description = "Provides transaction with given ID.")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable UUID id) {
+    public ResponseEntity<TransactionDTO> getTransactionById(@PathVariable UUID id) {
         Transaction transaction = this.transactionService.getTransactionById(id);
-        return ResponseEntity.ok(transaction);
+        return ResponseEntity.ok(new TransactionDTO(transaction));
     }
 
     @GetMapping
     @Operation(summary = "Get list of transactions", description = "Provides list of transactions, with optional filtering by completion date and category")
-    public ResponseEntity<List<Transaction>> getAllTransactions(
+    public ResponseEntity<List<TransactionDTO>> getAllTransactions(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
             @RequestParam(required = false) UUID categoryId
@@ -46,12 +46,15 @@ public class TransactionController {
         }
 
         List<Transaction> transaction = this.transactionService.getAllTransactions(from, to, category);
-        return ResponseEntity.ok(transaction);
+        List<TransactionDTO> dtos = transaction.stream()
+                .map(TransactionDTO::new)
+                .toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
     @Operation(summary = "Create transaction", description = "Creates transaction with given parameters.")
-    public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDTO dto) {
+    public ResponseEntity<TransactionDTO> createTransaction(@RequestBody TransactionCreationDTO dto) {
         Transaction transaction = new Transaction();
 
         Account account = new Account();
@@ -70,8 +73,8 @@ public class TransactionController {
 
         transaction.setDescription(dto.description());
 
-        Transaction newTransaction = this.transactionService.createTransaction(transaction);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newTransaction);
+        this.transactionService.createTransaction(transaction);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionDTO(transaction));
     }
 
     @DeleteMapping("/{id}")
