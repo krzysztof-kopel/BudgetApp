@@ -35,16 +35,10 @@ public class AccountController {
 
     @PostMapping
     @Operation(summary = "Create account", description = "Creates account with default balance of 0.")
-    public ResponseEntity<Account> createAccount(@RequestBody AccountDTO accountDTO) {
-        Account account = fromDTO(accountDTO);
+    public ResponseEntity<Account> createAccount(@RequestBody AccountCreationDTO accountDTO) {
+        Account account = new Account(accountDTO);
         Account newAccount = this.accountService.createAccount(account);
         return ResponseEntity.status(HttpStatus.CREATED).body(newAccount);
-    }
-
-    private Account fromDTO(AccountDTO dto) {
-        Account account = new Account();
-        account.setName(dto.name());
-        return account;
     }
 
     @DeleteMapping("/{id}")
