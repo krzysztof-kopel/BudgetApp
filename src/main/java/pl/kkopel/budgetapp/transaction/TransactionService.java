@@ -93,6 +93,15 @@ public class TransactionService {
         this.transactionRepository.delete(transaction);
     }
 
+    BigDecimal getTotalIncomeExpense(TransactionType transactionType, Category category) {
+        List<Transaction> transactions = this.getAllTransactions(null, null, category);
+
+        return transactions.stream()
+                .filter(transaction -> transaction.getType() != null && transaction.getType().getId().equals(transactionType.getId()))
+                .map(Transaction::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
     private void changeAccountBalance(Account account, BigDecimal amount, AccountOperation operation) {
         if (operation.equals(AccountOperation.SUBTRACT)) {
             account.setBalance(account.getBalance().subtract(amount));
